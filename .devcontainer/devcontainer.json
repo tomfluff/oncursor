@@ -1,0 +1,32 @@
+{
+    "name": "oncursor",
+    "image": "mcr.microsoft.com/devcontainers/javascript-node:20",
+
+    // Add Python for the optional chart-analysis backend.
+    "features": {
+        "ghcr.io/devcontainers/features/python:1": {
+            "version": "3.12"
+        }
+    },
+
+    // 3000 = Vite demo (server.host enabled in vite.config.ts), 8080 = Flask analyzer.
+    "forwardPorts": [3000, 8080],
+    "portsAttributes": {
+        "3000": { "label": "demo (vite)", "onAutoForward": "openPreview" },
+        "8080": { "label": "analyzer (flask)", "onAutoForward": "silent" }
+    },
+
+    // Install frontend + backend deps once the container is created.
+    "postCreateCommand": "cd frontend && npm install && cd ../backend && pip install -r requirements.txt",
+
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "dbaeumer.vscode-eslint",
+                "esbenp.prettier-vscode",
+                "ms-python.python",
+                "ms-python.vscode-pylance"
+            ]
+        }
+    }
+}

@@ -1,0 +1,21 @@
+# Dependencies / build
+node_modules/
+dist/
+*.tsbuildinfo
+
+# Env (never commit real keys; .env.example is tracked)
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
