@@ -169,6 +169,8 @@ const DemoPage = () => {
         borderRadius: "var(--mantine-radius-md)",
         cursor: "pointer",
         fontSize: 14,
+        whiteSpace: "nowrap",
+        flexShrink: 0,
     } as const;
 
     return (
@@ -406,9 +408,12 @@ const DemoPage = () => {
                         transform: "translateX(-50%)",
                         display: "flex",
                         alignItems: "center",
+                        flexWrap: "nowrap",
                         gap: 8,
                         padding: "6px 8px",
                         borderRadius: "var(--mantine-radius-xl)",
+                        maxWidth: "calc(100vw - 24px)",
+                        overflowX: "auto",
                     }}
                 >
                     {/* Examples tray */}
@@ -588,6 +593,7 @@ const DemoPage = () => {
 
                     {/* Method switcher */}
                     <SegmentedControl
+                        style={{ flexShrink: 0 }}
                         value={conditionId}
                         onChange={(v) => updateParam("conditionId", v)}
                         data={(
@@ -659,7 +665,7 @@ const DemoPage = () => {
                     />
 
                     {/* Zoom / magnification controls */}
-                    <Group gap={4} align="center">
+                    <Group gap={4} align="center" wrap="nowrap" style={{ flexShrink: 0 }}>
                         <Tooltip label="Zoom out" withArrow>
                             <ActionIcon
                                 variant="subtle"
