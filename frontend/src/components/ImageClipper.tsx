@@ -14,6 +14,8 @@ interface ImageClipperProps {
     y2: number;
     /** Scale factor for the final output size (default: 1) */
     scale?: number;
+    /** Padding around the cropped area (default: 0) */
+    padding?: number;
 }
 
 const ImageClipped = ({
@@ -23,6 +25,7 @@ const ImageClipped = ({
     x2,
     y2,
     scale = 1,
+    padding = 0,
 }: ImageClipperProps) => {
     const [imageDimensions, setImageDimensions] = useState<{
         width: number;
@@ -32,6 +35,15 @@ const ImageClipped = ({
     // Validate inputs
     const isValidRange = (value: number) => value >= 0 && value <= 1;
     const isValidBoundingBox = x1 < x2 && y1 < y2;
+
+    // Adjust x1, y1, x2, y2 to include padding in the original image's coordinate space
+    const relPaddingX = padding / (imageDimensions ? imageDimensions.width : 1);
+    const relPaddingY = padding / (imageDimensions ? imageDimensions.height : 1);
+
+    x1 = Math.max(0, x1 - relPaddingX);
+    y1 = Math.max(0, y1 - relPaddingY);
+    x2 = Math.min(1, x2 + relPaddingX);
+    y2 = Math.min(1, y2 + relPaddingY);
 
     if (
         !isValidRange(x1) ||
@@ -89,8 +101,8 @@ const ImageClipped = ({
                     display: "block",
                     width: `${imageDimensions.width * scale}px`,
                     height: `${imageDimensions.height * scale}px`,
-                    marginLeft: `-${x1 * imageDimensions.width * scale}px`,
-                    marginTop: `-${y1 * imageDimensions.height * scale}px`,
+                    marginLeft: `-${(x1 * imageDimensions.width) * scale}px`,
+                    marginTop: `-${(y1 * imageDimensions.height) * scale}px`,
                 }}
                 draggable={false}
             />

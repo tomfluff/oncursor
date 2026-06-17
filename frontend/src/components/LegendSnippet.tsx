@@ -29,6 +29,7 @@ const LegendSnippet = (props: Props) => {
                 x2={legendData.bbox.x2}
                 y2={legendData.bbox.y2}
                 scale={scale || 1}
+                padding={4}
             />
         </Box>
     );

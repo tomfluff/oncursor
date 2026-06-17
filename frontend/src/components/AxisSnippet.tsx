@@ -170,6 +170,7 @@ const AxisSnippet = (props: Props) => {
                     x2={boundingBox.x2}
                     y2={boundingBox.y2}
                     scale={vizScale || 1}
+                    padding={8}
                 />
             </Box>
         </>

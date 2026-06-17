@@ -128,9 +128,9 @@ const UploadModal = ({ opened, onClose, onLoaded }: Props) => {
                             src={preview}
                             alt="Selected chart preview"
                             mah={260}
-                            w="auto"
+                            maw="100%"
                             fit="contain"
-                            style={{ margin: "0 auto" }}
+                            style={{ width: "auto", margin: "0 auto" }}
                         />
                     ) : (
                         <Stack align="center" gap={6}>

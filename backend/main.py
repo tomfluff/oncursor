@@ -27,6 +27,7 @@ CORS(app, resources={r"/analyze": {"origins": _origins_value}})
 # Reject oversized uploads (data-URL length; base64 adds ~33% overhead).
 MAX_IMAGE_BYTES = int(os.getenv("MAX_IMAGE_BYTES", str(8 * 1024 * 1024)))
 
+DEBUG = os.getenv("DEBUG", "false").lower() == "true"
 
 @app.get("/health")
 def health():
@@ -58,4 +59,4 @@ def analyze():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=int(os.getenv("PORT", 8080)))
+    app.run(host="0.0.0.0", port=int(os.getenv("PORT", 8080)), debug=DEBUG)

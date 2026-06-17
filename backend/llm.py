@@ -36,14 +36,13 @@ def analyze_chart_image(data_url: str) -> dict:
         input=[
             {
                 "role": "developer",
-                "content": "Analyze this chart image and return the JSON:",
+                "content": [{"type": "input_text", "text": "Analyze this chart image and return the JSON:"}],
             },
             {
                 "role": "user",
                 "content": [{"type": "input_image", "image_url": data_url}],
             },
         ],
-        temperature=0.2,
         max_output_tokens=8192,
         text={"format": {"type": "json_object"}},
     )
