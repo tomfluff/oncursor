@@ -92,7 +92,7 @@ const RAW_VISUALIZATIONS: VisualizationData[] = [
         width: 3721,
         height: 3784,
         name: "tree_map.png",
-        type: null,
+        type: undefined,
         imageName: "tree_map.png",
         annotations: [
             {
@@ -389,7 +389,7 @@ const RAW_VISUALIZATIONS: VisualizationData[] = [
         width: 1184,
         height: 1185,
         name: "histogram.png",
-        type: null,
+        type: undefined,
         imageName: "histogram.png",
         annotations: [
             {
