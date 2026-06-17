@@ -27,10 +27,11 @@ import {
     IconCrosshair,
     IconExternalLink,
     IconInfoCircle,
-    IconLayoutGrid,
+    IconLibrary,
     IconMap2,
     IconMapPin,
     IconPointer,
+    IconUpload,
     IconX,
     IconZoomIn,
     IconZoomOut,
@@ -44,7 +45,7 @@ import {
     type ReactZoomPanPinchRef,
 } from "react-zoom-pan-pinch";
 import SettingsPanel from "../../components/SettingsPanel";
-import UploadChartButton from "../../components/UploadChartButton";
+import UploadModal from "../../components/UploadModal";
 import VisualizationPanel from "../../components/VisualizationPanel";
 import {
     DEMO_CHART_INDEX,
@@ -112,6 +113,7 @@ const DemoPage = () => {
     const [pinned, setPinned] = useState(false);
     const [clearPinToken, setClearPinToken] = useState(0);
     const [aboutOpen, setAboutOpen] = useState(false);
+    const [uploadOpen, setUploadOpen] = useState(false);
     const transformRef = useRef<ReactZoomPanPinchRef>(null);
     const [scale, setScale] = useState(1);
     const maxScale = 8;
@@ -431,15 +433,68 @@ const DemoPage = () => {
                                         : "transparent",
                                 }}
                             >
-                                <IconLayoutGrid size={16} />
-                                Examples
+                                <IconLibrary size={16} />
+                                Chart Library
                                 <IconChevronUp size={14} />
                             </UnstyledButton>
                         </Popover.Target>
                         <Popover.Dropdown p="xs">
                             <Text size="xs" fw={500} c="dimmed" mb={6} px={4}>
-                                Example charts
+                                Chart Library
                             </Text>
+
+                            {/* Upload — first option */}
+                            <UnstyledButton
+                                onClick={() => {
+                                    setExamplesOpen(false);
+                                    setUploadOpen(true);
+                                }}
+                                aria-label="Upload your own chart"
+                                style={{
+                                    display: "flex",
+                                    gap: 10,
+                                    alignItems: "center",
+                                    width: "100%",
+                                    padding: 6,
+                                    marginBottom: 6,
+                                    borderRadius: 8,
+                                    border: `1px solid ${
+                                        uploadedViz
+                                            ? "var(--mantine-color-blue-4)"
+                                            : "var(--mantine-color-gray-3)"
+                                    }`,
+                                    background: uploadedViz
+                                        ? "var(--mantine-color-blue-0)"
+                                        : "transparent",
+                                }}
+                            >
+                                <Box
+                                    style={{
+                                        width: 72,
+                                        height: 44,
+                                        flexShrink: 0,
+                                        borderRadius: 4,
+                                        border: "1px dashed var(--mantine-color-gray-4)",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        color: "var(--mantine-color-gray-6)",
+                                    }}
+                                >
+                                    <IconUpload size={20} />
+                                </Box>
+                                <div style={{ minWidth: 0 }}>
+                                    <Text size="sm" fw={600} lineClamp={1}>
+                                        Upload your own…
+                                    </Text>
+                                    <Text size="xs" c="dimmed" lineClamp={1}>
+                                        Drag, paste, or pick an image
+                                    </Text>
+                                </div>
+                            </UnstyledButton>
+
+                            <Divider mb={6} />
+
                             <ScrollArea
                                 h={216}
                                 w={320}
@@ -522,14 +577,6 @@ const DemoPage = () => {
                             </ScrollArea>
                         </Popover.Dropdown>
                     </Popover>
-
-                    {/* Upload & analyze (only shown when VITE_ANALYZE_URL set) */}
-                    <UploadChartButton
-                        onAnalyzed={(viz) => {
-                            setUploadedViz(viz);
-                            setExamplesOpen(false);
-                        }}
-                    />
 
                     <Box
                         style={{
@@ -701,6 +748,16 @@ const DemoPage = () => {
                     — reach out with any questions.
                 </Text>
             </Group>
+
+            {/* Upload modal */}
+            <UploadModal
+                opened={uploadOpen}
+                onClose={() => setUploadOpen(false)}
+                onLoaded={(viz) => {
+                    setUploadedViz(viz);
+                    setUploadOpen(false);
+                }}
+            />
 
             {/* About modal */}
             <Modal

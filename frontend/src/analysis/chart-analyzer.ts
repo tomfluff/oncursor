@@ -9,7 +9,7 @@ import type { IAnnotation, VisualizationData } from "../types/visualization-type
  * can NOT run in the static site. Instead the app POSTs the image to a small
  * serverless proxy that holds the key server-side. Point VITE_ANALYZE_URL at
  * that proxy to enable uploads; when it is unset, uploads are disabled and the
- * app stays fully static (see {@link isAnalyzeEnabled} / UploadChartButton).
+ * app stays fully static (see {@link isAnalyzeEnabled} / UploadModal).
  *
  * Expected proxy contract:
  *   POST   { image: "<data-url>" }
@@ -108,5 +108,22 @@ export async function analyzeChart(
         plotType:
             (raw as { plotType?: string } | null)?.plotType ?? undefined,
         annotations: asAnnotations(raw),
+    };
+}
+
+/**
+ * Load an uploaded image as a chart WITHOUT analysis (no annotations). The
+ * mini-map, focus box, and magnification work on any image; only Dynamic
+ * Context needs annotations. Used when no analyzer endpoint is configured.
+ */
+export async function loadChartImage(file: File): Promise<VisualizationData> {
+    const { dataUrl, width, height } = await readImage(file);
+    return {
+        id: `upload-${Date.now()}`,
+        name: file.name,
+        pngUrl: dataUrl,
+        width,
+        height,
+        annotations: [],
     };
 }
