@@ -8,7 +8,7 @@ import InteractiveOverview from "./InteractiveOverview";
 
 type Props = {
     vizData: VisualizationData;
-    containerRef: React.RefObject<HTMLDivElement>;
+    containerRef: React.RefObject<HTMLElement>;
     cursorX: number;
     cursorY: number;
     isHovering?: boolean; // Optional prop to indicate if the overlay is being hovered

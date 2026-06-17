@@ -5,7 +5,7 @@ import type { VisualizationData } from "../types/visualization-types";
 
 type Props = {
     vizData: VisualizationData;
-    containerRef?: React.RefObject<HTMLDivElement>;
+    containerRef?: React.RefObject<HTMLElement>;
     cursorX: number;
     cursorY: number;
 };

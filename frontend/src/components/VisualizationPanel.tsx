@@ -12,7 +12,6 @@ import DynamicOverlay from "./DynamicOverlay";
 
 type Props = {
     vizData: VisualizationData;
-    onMouseMove?: (x: number, y: number, w: number, h: number) => void;
     onLoaded?: () => void;
     allowOverlay?: boolean;
     forceOverlay?: boolean;
@@ -43,7 +42,6 @@ type Props = {
 const VisualizationPanel = (props: Props) => {
     const {
         vizData,
-        onMouseMove,
         onLoaded,
         allowOverlay,
         forceOverlay,
@@ -74,7 +72,6 @@ const VisualizationPanel = (props: Props) => {
         const x = (e.clientX - rect.left) / s;
         const y = (e.clientY - rect.top) / s;
         setPos({ x, y });
-        onMouseMove?.(x, y, el.offsetWidth, el.offsetHeight);
     };
 
     const [isHideContent, setIsHideContent] = useState(false);
@@ -183,9 +180,7 @@ const VisualizationPanel = (props: Props) => {
                 (forceOverlay || isHover) && ( // Show overlay if forceOverlay is true or if hovering
                     <DynamicOverlay
                         vizData={vizData}
-                        containerRef={
-                            imageRef as React.RefObject<HTMLImageElement>
-                        }
+                        containerRef={imageRef as React.RefObject<HTMLElement>}
                         cursorX={isHover ? cursorX : cursorRest.x}
                         cursorY={isHover ? cursorY : cursorRest.y}
                         isHovering={isHover}

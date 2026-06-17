@@ -10,7 +10,7 @@ import LegendSnippet from "./LegendSnippet";
 
 type Props = {
     vizData: VisualizationData;
-    containerRef: React.RefObject<HTMLDivElement>;
+    containerRef: React.RefObject<HTMLElement>;
     cursorX: number;
     cursorY: number;
 };

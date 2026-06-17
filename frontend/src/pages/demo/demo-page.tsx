@@ -39,6 +39,8 @@ import {
 } from "@tabler/icons-react";
 import { useMemo, useRef, useState, type ReactNode } from "react";
 import { useSearchParams } from "react-router";
+import type { ConditionId } from "../../hooks/useUrlVariables";
+import { useUrlVariables } from "../../hooks/useUrlVariables";
 import {
     TransformComponent,
     TransformWrapper,
@@ -52,8 +54,6 @@ import {
     DEMO_VIZ_BY_ID,
 } from "../../data/demo-visualizations";
 import type { VisualizationData } from "../../types/visualization-types";
-
-type ConditionId = "none" | "minimap" | "overview";
 
 const AUTHOR_URL = "https://tomfluff.github.io/";
 const AUTHOR_IMG =
@@ -107,6 +107,7 @@ const chartTitle = (vizId: string, fallback: string) =>
 
 const DemoPage = () => {
     const [searchParams, setSearchParams] = useSearchParams();
+    const { conditionId } = useUrlVariables();
     const { ref: stageRef, height: stageHeight } = useElementSize();
     const [settingsOpen, setSettingsOpen] = useState(false);
     const [examplesOpen, setExamplesOpen] = useState(false);
@@ -117,11 +118,6 @@ const DemoPage = () => {
     const transformRef = useRef<ReactZoomPanPinchRef>(null);
     const [scale, setScale] = useState(1);
     const maxScale = 8;
-
-    const conditionId = ((): ConditionId => {
-        const c = searchParams.get("conditionId") || searchParams.get("cid");
-        return c === "minimap" || c === "overview" ? c : "none";
-    })();
 
     const selectedVizId = searchParams.get("viz") || DEMO_CHART_INDEX[0].vizId;
     const vizData = useMemo(

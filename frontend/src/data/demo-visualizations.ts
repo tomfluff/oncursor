@@ -92,8 +92,6 @@ const RAW_VISUALIZATIONS: VisualizationData[] = [
         width: 3721,
         height: 3784,
         name: "tree_map.png",
-        type: undefined,
-        imageName: "tree_map.png",
         annotations: [
             {
                 id: "3c634da4-ce92-4bf2-8cdd-299b986d54e1",
@@ -115,8 +113,6 @@ const RAW_VISUALIZATIONS: VisualizationData[] = [
         width: 1183,
         height: 1185,
         name: "100_stacked_bar.png",
-        type: "100-stacked-bar",
-        imageName: "100_stacked_bar.png",
         annotations: [
             {
                 id: "041ac4c1-fc16-4046-9d03-f63badac3ee1",
@@ -389,8 +385,6 @@ const RAW_VISUALIZATIONS: VisualizationData[] = [
         width: 1184,
         height: 1185,
         name: "histogram.png",
-        type: undefined,
-        imageName: "histogram.png",
         annotations: [
             {
                 id: "0e6db960-76ee-42b8-9f61-a671d1fa8c5e",
@@ -746,8 +740,6 @@ const RAW_VISUALIZATIONS: VisualizationData[] = [
         width: 2188,
         height: 1563,
         name: "choropleth_map.png",
-        type: "choropleth",
-        imageName: "choropleth_map.png",
         annotations: [
             {
                 id: "c88692b8-42dd-436b-aa15-e233370520e3",
@@ -779,8 +771,6 @@ const RAW_VISUALIZATIONS: VisualizationData[] = [
         width: 1146,
         height: 1059,
         name: "pie_chart.png",
-        type: "pie-chart",
-        imageName: "pie_chart.png",
         annotations: [
             {
                 id: "0a6d238b-ead0-4207-8b92-95b32c31cddd",
@@ -802,8 +792,6 @@ const RAW_VISUALIZATIONS: VisualizationData[] = [
         width: 1707,
         height: 1332,
         name: "bubble_chart.png",
-        type: "bubble-chart",
-        imageName: "bubble_chart.png",
         annotations: [
             {
                 id: "a8ccf062-4742-42bd-a519-88b0278f4a62",
@@ -1280,8 +1268,6 @@ const RAW_VISUALIZATIONS: VisualizationData[] = [
         width: 1163,
         height: 1185,
         name: "stacked_bar.png",
-        type: "stacked-bar",
-        imageName: "stacked_bar.png",
         annotations: [
             {
                 id: "c45a3b46-6b46-4b9a-80b8-2bbe7c32c6f0",
@@ -1710,8 +1696,6 @@ const RAW_VISUALIZATIONS: VisualizationData[] = [
         width: 1177,
         height: 1183,
         name: "line_chart.png",
-        type: "line-chart",
-        imageName: "line_chart.png",
         annotations: [
             {
                 id: "c0c826e1-9720-4926-a45b-d7c2cc0753f2",
@@ -2056,8 +2040,6 @@ const RAW_VISUALIZATIONS: VisualizationData[] = [
         width: 1177,
         height: 1183,
         name: "bar_chart.png",
-        type: "bar-chart",
-        imageName: "bar_chart.png",
         annotations: [
             {
                 id: "c0c826e1-9720-4926-a45b-d7c2cc0753f2",
@@ -2416,8 +2398,6 @@ const RAW_VISUALIZATIONS: VisualizationData[] = [
         width: 1184,
         height: 1185,
         name: "area_chart.png",
-        type: "area-chart",
-        imageName: "area_chart.png",
         annotations: [
             {
                 id: "45215297-18f9-41c9-9309-045cdd3f5ca5",
@@ -2665,8 +2645,6 @@ const RAW_VISUALIZATIONS: VisualizationData[] = [
         width: 1344,
         height: 1112,
         name: "stacked_area.png",
-        type: "stacked-area",
-        imageName: "stacked_area.png",
         annotations: [
             {
                 id: "67b92487-fe47-47d2-bbeb-4c7549987508",
@@ -2954,8 +2932,6 @@ const RAW_VISUALIZATIONS: VisualizationData[] = [
         width: 1184,
         height: 1185,
         name: "scatter_plot.png",
-        type: "scatter-plot",
-        imageName: "scatter_plot.png",
         annotations: [
             {
                 id: "74cadda9-31d4-4fda-b46d-f9703820a2fd",

@@ -3,11 +3,9 @@ export type VisualizationData = {
     width: number;
     height: number;
     name?: string;
-    type?: string;
     plotType?: string;
     pngUrl?: string;
     svgUrl?: string;
-    imageName?: string;
     annotations?: IAnnotation[];
 };
 

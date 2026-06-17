@@ -17,9 +17,8 @@ import {
     IconFocusCentered,
     IconMap2,
 } from "@tabler/icons-react";
+import type { ConditionId } from "../hooks/useUrlVariables";
 import useSessionStore from "../stores/session-store";
-
-type ConditionId = "none" | "minimap" | "overview";
 
 type Props = {
     conditionId: ConditionId;
