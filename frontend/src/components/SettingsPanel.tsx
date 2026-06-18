@@ -4,6 +4,7 @@ import {
     Divider,
     Grid,
     Group,
+    Kbd,
     SegmentedControl,
     Slider,
     Stack,
@@ -125,6 +126,15 @@ const SettingsPanel = ({ conditionId }: Props) => {
                 marks={ratioMarks}
                 format={ratio}
             />
+
+            <Group gap={4} align="center">
+                <Text size="xs" c="dimmed">Resize with</Text>
+                <Kbd size="xs">Ctrl</Kbd>
+                <Kbd size="xs">← →</Kbd>
+                <Text size="xs" c="dimmed">width ·</Text>
+                <Kbd size="xs">↑ ↓</Kbd>
+                <Text size="xs" c="dimmed">height</Text>
+            </Group>
 
             <Divider my="xs" />
 

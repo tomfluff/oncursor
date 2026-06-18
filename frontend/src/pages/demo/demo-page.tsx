@@ -6,6 +6,7 @@ import {
     Divider,
     Group,
     Image,
+    Kbd,
     List,
     Modal,
     Paper,
@@ -116,9 +117,16 @@ const DemoPage = () => {
     const [clearPinToken, setClearPinToken] = useState(0);
     const [aboutOpen, setAboutOpen] = useState(false);
     const [uploadOpen, setUploadOpen] = useState(false);
+    const [showTip, setShowTip] = useState(false);
+    const isHoveringSegment = useRef(false);
     const transformRef = useRef<ReactZoomPanPinchRef>(null);
     const [scale, setScale] = useState(1);
     const maxScale = 8;
+    useEffect(() => {
+        if (conditionId === "none") { setShowTip(false); return; }
+        if (isHoveringSegment.current) setShowTip(true);
+    }, [conditionId]);
+
     useEffect(() => {
         const STEP = 0.05;
         const handler = (e: KeyboardEvent) => {
@@ -601,22 +609,50 @@ const DemoPage = () => {
                     />
 
                     {/* Method switcher */}
-                    <SegmentedControl
-                        style={{ flexShrink: 0 }}
-                        value={conditionId}
-                        onChange={(v) => updateParam("conditionId", v)}
-                        data={(
-                            ["none", "minimap", "overview"] as ConditionId[]
-                        ).map((id) => ({
-                            value: id,
-                            label: (
-                                <Group gap={5} align="center" wrap="nowrap">
-                                    {METHOD_INFO[id].icon}
-                                    <span>{METHOD_INFO[id].label}</span>
-                                </Group>
-                            ),
-                        }))}
-                    />
+                    <Popover
+                        opened={showTip}
+                        position="top"
+                        withArrow
+                        shadow="sm"
+                        offset={8}
+                    >
+                        <Popover.Target>
+                            <Box
+                                style={{ flexShrink: 0 }}
+                                onMouseEnter={() => { isHoveringSegment.current = true; setShowTip(conditionId !== "none"); }}
+                                onMouseLeave={() => { isHoveringSegment.current = false; setShowTip(false); }}
+                            >
+                            <SegmentedControl
+                                value={conditionId}
+                                onChange={(v) => updateParam("conditionId", v)}
+                                data={(
+                                    ["none", "minimap", "overview"] as ConditionId[]
+                                ).map((id) => ({
+                                    value: id,
+                                    label: (
+                                        <Group gap={5} align="center" wrap="nowrap">
+                                            {METHOD_INFO[id].icon}
+                                            <span>{METHOD_INFO[id].label}</span>
+                                        </Group>
+                                    ),
+                                }))}
+                            />
+                            </Box>
+                        </Popover.Target>
+                        <Popover.Dropdown p="xs" style={{ pointerEvents: "none" }}>
+                            <Group gap={4} align="center" wrap="nowrap">
+                                <Text size="xs" fw={500}>
+                                    To change lens size:
+                                </Text>
+                                <Text size="xs">Use</Text>
+                                <Kbd size="xs">Ctrl</Kbd>
+                                <Kbd size="xs">← →</Kbd>
+                                <Text size="xs">(width) ·</Text>
+                                <Kbd size="xs">↑ ↓</Kbd>
+                                <Text size="xs">(height).</Text>
+                            </Group>
+                        </Popover.Dropdown>
+                    </Popover>
 
                     <Box
                         style={{
