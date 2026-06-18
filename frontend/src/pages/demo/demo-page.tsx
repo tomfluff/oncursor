@@ -27,7 +27,6 @@ import {
     IconCircleOff,
     IconCrosshair,
     IconExternalLink,
-    IconInfoCircle,
     IconLibrary,
     IconMap2,
     IconMapPin,
@@ -363,11 +362,10 @@ const DemoPage = () => {
                             background: pinned
                                 ? "var(--mantine-color-orange-0)"
                                 : "var(--mantine-color-body)",
-                            border: `0.5px solid ${
-                                pinned
+                            border: `0.5px solid ${pinned
                                     ? "var(--mantine-color-orange-4)"
                                     : "var(--mantine-color-gray-3)"
-                            }`,
+                                }`,
                             borderRadius: "var(--mantine-radius-md)",
                             padding: "3px 4px 3px 8px",
                         }}
@@ -480,11 +478,10 @@ const DemoPage = () => {
                                     padding: 6,
                                     marginBottom: 6,
                                     borderRadius: 8,
-                                    border: `1px solid ${
-                                        uploadedViz
+                                    border: `1px solid ${uploadedViz
                                             ? "var(--mantine-color-blue-4)"
                                             : "var(--mantine-color-gray-3)"
-                                    }`,
+                                        }`,
                                     background: uploadedViz
                                         ? "var(--mantine-color-blue-0)"
                                         : "transparent",
@@ -544,11 +541,10 @@ const DemoPage = () => {
                                                     alignItems: "center",
                                                     padding: 6,
                                                     borderRadius: 8,
-                                                    border: `1px solid ${
-                                                        selected
+                                                    border: `1px solid ${selected
                                                             ? "var(--mantine-color-blue-4)"
                                                             : "transparent"
-                                                    }`,
+                                                        }`,
                                                     background: selected
                                                         ? "var(--mantine-color-blue-0)"
                                                         : "transparent",
@@ -622,21 +618,21 @@ const DemoPage = () => {
                                 onMouseEnter={() => { isHoveringSegment.current = true; setShowTip(conditionId !== "none"); }}
                                 onMouseLeave={() => { isHoveringSegment.current = false; setShowTip(false); }}
                             >
-                            <SegmentedControl
-                                value={conditionId}
-                                onChange={(v) => updateParam("conditionId", v)}
-                                data={(
-                                    ["none", "minimap", "overview"] as ConditionId[]
-                                ).map((id) => ({
-                                    value: id,
-                                    label: (
-                                        <Group gap={5} align="center" wrap="nowrap">
-                                            {METHOD_INFO[id].icon}
-                                            <span>{METHOD_INFO[id].label}</span>
-                                        </Group>
-                                    ),
-                                }))}
-                            />
+                                <SegmentedControl
+                                    value={conditionId}
+                                    onChange={(v) => updateParam("conditionId", v)}
+                                    data={(
+                                        ["none", "minimap", "overview"] as ConditionId[]
+                                    ).map((id) => ({
+                                        value: id,
+                                        label: (
+                                            <Group gap={5} align="center" wrap="nowrap">
+                                                {METHOD_INFO[id].icon}
+                                                <span>{METHOD_INFO[id].label}</span>
+                                            </Group>
+                                        ),
+                                    }))}
+                                />
                             </Box>
                         </Popover.Target>
                         <Popover.Dropdown p="xs" style={{ pointerEvents: "none" }}>
