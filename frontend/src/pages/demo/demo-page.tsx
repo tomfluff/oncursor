@@ -37,7 +37,7 @@ import {
     IconZoomOut,
     IconZoomReset,
 } from "@tabler/icons-react";
-import { useMemo, useRef, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { useSearchParams } from "react-router";
 import type { ConditionId } from "../../hooks/useUrlVariables";
 import { useUrlVariables } from "../../hooks/useUrlVariables";
@@ -47,6 +47,7 @@ import {
     type ReactZoomPanPinchRef,
 } from "react-zoom-pan-pinch";
 import SettingsPanel from "../../components/SettingsPanel";
+import useSessionStore from "../../stores/session-store";
 import UploadModal from "../../components/UploadModal";
 import VisualizationPanel from "../../components/VisualizationPanel";
 import {
@@ -118,6 +119,19 @@ const DemoPage = () => {
     const transformRef = useRef<ReactZoomPanPinchRef>(null);
     const [scale, setScale] = useState(1);
     const maxScale = 8;
+    useEffect(() => {
+        const STEP = 0.05;
+        const handler = (e: KeyboardEvent) => {
+            if (!e.ctrlKey) return;
+            const { update, overlayWidth, overlayHeight } = useSessionStore.getState();
+            if (e.key === "ArrowRight") { e.preventDefault(); update("overlayWidth", Math.min(1, overlayWidth.value + STEP)); }
+            else if (e.key === "ArrowLeft") { e.preventDefault(); update("overlayWidth", Math.max(0, overlayWidth.value - STEP)); }
+            else if (e.key === "ArrowUp") { e.preventDefault(); update("overlayHeight", Math.min(1, overlayHeight.value + STEP)); }
+            else if (e.key === "ArrowDown") { e.preventDefault(); update("overlayHeight", Math.max(0, overlayHeight.value - STEP)); }
+        };
+        window.addEventListener("keydown", handler);
+        return () => window.removeEventListener("keydown", handler);
+    }, []);
 
     const selectedVizId = searchParams.get("viz") || DEMO_CHART_INDEX[0].vizId;
     const vizData = useMemo(
@@ -227,7 +241,6 @@ const DemoPage = () => {
                             color: "var(--mantine-color-text)",
                         }}
                     >
-                        <IconInfoCircle size={15} />
                         About
                     </UnstyledButton>
                     <Anchor
