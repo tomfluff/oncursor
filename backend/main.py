@@ -1,8 +1,8 @@
 """Minimal chart-analysis proxy for the On-Cursor demo.
 
 A single POST /analyze endpoint that takes an image (data URL) and returns
-overlay-ready annotations. The OpenAI key stays here (server-side) and is read
-from the OPENAI_API_KEY env var — never sent to or stored in the frontend.
+overlay-ready annotations. The LLM API key stays here (server-side) — never
+sent to or stored in the frontend. See llm.py for provider selection.
 
 Deploy to Cloud Run (see README). Set ALLOWED_ORIGINS to the demo's origin.
 """
@@ -38,6 +38,7 @@ def health():
 def analyze():
     data = request.get_json(silent=True) or {}
     image = data.get("image")
+    provider = data.get("provider")
 
     if (
         not image
@@ -46,11 +47,14 @@ def analyze():
     ):
         return jsonify({"error": "Provide an 'image' field as a data URL."}), 400
 
+    if provider is not None and not isinstance(provider, str):
+        return jsonify({"error": "'provider' must be a string."}), 400
+
     if len(image) > MAX_IMAGE_BYTES * 1.4:
         return jsonify({"error": "Image too large."}), 413
 
     try:
-        result = analyze_chart_image(image)
+        result = analyze_chart_image(image, provider)
     except Exception as e:  # noqa: BLE001 - surface a clean error to the client
         app.logger.exception("Chart analysis failed")
         return jsonify({"error": "Analysis failed.", "detail": str(e)}), 502
