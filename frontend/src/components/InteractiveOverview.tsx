@@ -2,6 +2,7 @@ import { Box, Group } from "@mantine/core";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import useSessionStore from "../stores/session-store";
 import {
+    type AxisOrientation,
     type IAnnotation,
     type VisualizationData,
 } from "../types/visualization-types";
@@ -87,8 +88,9 @@ const InteractiveOverview = (props: Props) => {
     }, [vizData.annotations]);
 
     const getAxisOrientation = useCallback(
-        (axis: IAnnotation): "horizontal" | "vertical" => {
+        (axis: IAnnotation): AxisOrientation => {
             if (!axis) return "horizontal";
+            if (axis.orientation) return axis.orientation;
             const axisItems = vizData.annotations?.filter(
                 (item) => item.type === "axis-item" && item.parent === axis.id
             );

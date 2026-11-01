@@ -9,6 +9,8 @@ export type VisualizationData = {
     annotations?: IAnnotation[];
 };
 
+export type AxisOrientation = "horizontal" | "vertical";
+
 export interface IAnnotation {
     id: string;
     bbox: Bbox;
@@ -18,6 +20,8 @@ export interface IAnnotation {
     color?: string;
     parent?: string;
     discrete?: boolean;
+    /** Axes only. When unset, it is inferred from the axis's tick labels. */
+    orientation?: AxisOrientation;
 }
 
 export interface Bbox {

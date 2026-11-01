@@ -21,7 +21,7 @@ magnification — all configurable live.
 
 ```
 frontend/   React + TypeScript (Vite) demo  → GitHub Pages
-backend/    Reference chart-analysis proxy   → Cloud Run (optional)
+backend/    Reference chart-analysis proxy   (not used by the demo)
 ```
 
 The demo is fully self-contained: example charts and their annotations are
@@ -48,18 +48,19 @@ On a static host that needs a fallback, so the build copies `index.html` to
 `404.html` (see `vite.config.ts`) — GitHub Pages then serves the SPA for any
 path, and React Router resolves it client-side.
 
-## Optional: upload & analyze your own chart
+## Upload your own chart
 
-The demo includes a disabled-by-default "Upload" control. To enable it, deploy
-the reference analyzer in [`backend/`](backend/README.md) (it produces the same
-annotation format as the bundled examples) and set, in `frontend/.env`:
+Choose **Upload your own…** in the Chart Library, then drag boxes around the
+chart's horizontal axis, vertical axis, and legend. Dynamic Context shows the
+parts you mark; Mini-map and magnification work without any boxes. This all
+happens in the browser, and the image is never sent anywhere.
 
-```
-VITE_ANALYZE_URL=https://<your-cloud-run-service>/analyze
-```
+## Reference: AI chart analysis
 
-The analysis approach (prompt + endpoint) is included as a reference; the API
-key stays server-side and is never part of this repo.
+[`backend/`](backend/README.md) holds an AI chart-analysis service that produces
+the same annotation format as the bundled examples. The demo doesn't call it.
+It's kept as a reference for automating annotation, and the API key stays
+server-side.
 
 ## Credits
 

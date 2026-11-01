@@ -1,12 +1,9 @@
-import { Box, Button, Group, Image, Modal, Stack, Text } from "@mantine/core";
+import { Box, Button, Group, Modal, Stack, Text } from "@mantine/core";
 import { IconPhoto, IconUpload, IconX } from "@tabler/icons-react";
 import { useEffect, useRef, useState } from "react";
-import {
-    analyzeChart,
-    isAnalyzeEnabled,
-    loadChartImage,
-} from "../analysis/chart-analyzer";
+import { type ChartBoxes, loadChartImage } from "../data/uploaded-chart";
 import type { VisualizationData } from "../types/visualization-types";
+import ChartAnnotator from "./ChartAnnotator";
 
 type Props = {
     opened: boolean;
@@ -18,6 +15,7 @@ const UploadModal = ({ opened, onClose, onLoaded }: Props) => {
     const inputRef = useRef<HTMLInputElement>(null);
     const [file, setFile] = useState<File | null>(null);
     const [preview, setPreview] = useState<string | null>(null);
+    const [boxes, setBoxes] = useState<ChartBoxes>({});
     const [dragging, setDragging] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -28,6 +26,7 @@ const UploadModal = ({ opened, onClose, onLoaded }: Props) => {
             if (p) URL.revokeObjectURL(p);
             return null;
         });
+        setBoxes({});
         setDragging(false);
         setLoading(false);
         setError(null);
@@ -46,6 +45,7 @@ const UploadModal = ({ opened, onClose, onLoaded }: Props) => {
         }
         setError(null);
         setFile(f);
+        setBoxes({});
         setPreview((p) => {
             if (p) URL.revokeObjectURL(p);
             return URL.createObjectURL(f);
@@ -74,10 +74,7 @@ const UploadModal = ({ opened, onClose, onLoaded }: Props) => {
         setLoading(true);
         setError(null);
         try {
-            const viz = isAnalyzeEnabled
-                ? await analyzeChart(file)
-                : await loadChartImage(file);
-            onLoaded(viz);
+            onLoaded(await loadChartImage(file, boxes));
             handleClose();
         } catch (e) {
             setError(
@@ -91,52 +88,53 @@ const UploadModal = ({ opened, onClose, onLoaded }: Props) => {
         <Modal
             opened={opened}
             onClose={handleClose}
-            title="Upload a chart"
-            size="lg"
+            title={file ? "Mark the chart's axes and legend" : "Upload a chart"}
+            size="xl"
             centered
+            // A stray click must not throw away the boxes drawn so far.
+            closeOnClickOutside={!file}
         >
             <Stack gap="md">
-                <Box
-                    onClick={() => inputRef.current?.click()}
-                    onDragOver={(e) => {
-                        e.preventDefault();
-                        setDragging(true);
-                    }}
-                    onDragLeave={() => setDragging(false)}
-                    onDrop={(e) => {
-                        e.preventDefault();
-                        setDragging(false);
-                        selectFile(e.dataTransfer.files?.[0]);
-                    }}
-                    style={{
-                        border: `2px dashed ${
-                            dragging
-                                ? "var(--mantine-color-blue-5)"
-                                : "var(--mantine-color-gray-4)"
-                        }`,
-                        background: dragging
-                            ? "var(--mantine-color-blue-0)"
-                            : "var(--mantine-color-gray-0)",
-                        borderRadius: "var(--mantine-radius-md)",
-                        padding: "28px 16px",
-                        textAlign: "center",
-                        cursor: "pointer",
-                    }}
-                >
-                    {preview ? (
-                        <Image
-                            src={preview}
-                            alt="Selected chart preview"
-                            mah={260}
-                            maw="100%"
-                            fit="contain"
-                            style={{ width: "auto", margin: "0 auto" }}
-                        />
-                    ) : (
+                {preview ? (
+                    <ChartAnnotator
+                        key={preview}
+                        src={preview}
+                        boxes={boxes}
+                        onChange={setBoxes}
+                        disabled={loading}
+                    />
+                ) : (
+                    <Box
+                        onClick={() => inputRef.current?.click()}
+                        onDragOver={(e) => {
+                            e.preventDefault();
+                            setDragging(true);
+                        }}
+                        onDragLeave={() => setDragging(false)}
+                        onDrop={(e) => {
+                            e.preventDefault();
+                            setDragging(false);
+                            selectFile(e.dataTransfer.files?.[0]);
+                        }}
+                        style={{
+                            border: `2px dashed ${
+                                dragging
+                                    ? "var(--oc-selected-border)"
+                                    : "var(--oc-divider-strong)"
+                            }`,
+                            background: dragging
+                                ? "var(--oc-selected)"
+                                : "var(--oc-stage)",
+                            borderRadius: "var(--mantine-radius-md)",
+                            padding: "28px 16px",
+                            textAlign: "center",
+                            cursor: "pointer",
+                        }}
+                    >
                         <Stack align="center" gap={6}>
                             <IconPhoto
                                 size={36}
-                                color="var(--mantine-color-gray-5)"
+                                color="var(--mantine-color-dimmed)"
                             />
                             <Text fw={500}>
                                 Drag &amp; drop, paste, or click to choose an
@@ -146,24 +144,26 @@ const UploadModal = ({ opened, onClose, onLoaded }: Props) => {
                                 PNG, JPG, etc. The image stays in your browser.
                             </Text>
                         </Stack>
-                    )}
-                    <input
-                        ref={inputRef}
-                        type="file"
-                        accept="image/*"
-                        hidden
-                        onChange={(e) => selectFile(e.currentTarget.files?.[0])}
-                    />
-                </Box>
+                        <input
+                            ref={inputRef}
+                            type="file"
+                            accept="image/*"
+                            hidden
+                            onChange={(e) =>
+                                selectFile(e.currentTarget.files?.[0])
+                            }
+                        />
+                    </Box>
+                )}
 
-                {!isAnalyzeEnabled && (
+                {file && (
                     <Text size="xs" c="dimmed">
-                        Mini-map and magnification work on any image. Detecting
-                        axes and the legend for{" "}
+                        Skip anything the chart doesn't have.{" "}
                         <Text span fw={500}>
                             Dynamic Context
                         </Text>{" "}
-                        needs an analyzer endpoint, which isn't configured here.
+                        shows the parts you mark. Mini-map and magnification
+                        work without any boxes.
                     </Text>
                 )}
 
@@ -181,7 +181,7 @@ const UploadModal = ({ opened, onClose, onLoaded }: Props) => {
                             leftSection={<IconX size={16} />}
                             onClick={reset}
                         >
-                            Clear
+                            Choose another image
                         </Button>
                     )}
                     <Button
@@ -190,11 +190,7 @@ const UploadModal = ({ opened, onClose, onLoaded }: Props) => {
                         disabled={!file}
                         onClick={handleUse}
                     >
-                        {loading
-                            ? isAnalyzeEnabled
-                                ? "Analyzing…"
-                                : "Loading…"
-                            : "Use chart"}
+                        {loading ? "Loading…" : "Use chart"}
                     </Button>
                 </Group>
             </Stack>

@@ -1,10 +1,9 @@
 # Chart-analysis proxy (reference)
 
-A minimal Flask service that turns an uploaded chart image into overlay-ready
-annotations for the demo. It wraps a vision-LLM call so the API key stays
-server-side. This is a **reference implementation** — the demo works fully
-without it (bundled examples); the backend only powers the optional "upload &
-analyze your own chart" feature.
+A minimal Flask service that turns a chart image into overlay-ready annotations.
+It wraps a vision-LLM call so the API key stays server-side. This is a
+**reference implementation** and the demo doesn't call it: uploaded charts are
+annotated by hand in the browser.
 
 ## Contract
 
@@ -31,9 +30,6 @@ cp .env.example .env            # then put your real OPENAI_API_KEY in .env
 ALLOWED_ORIGINS=* python main.py # http://localhost:8080
 ```
 
-Point the frontend at it: set `VITE_ANALYZE_URL=http://localhost:8080/analyze`
-in `frontend/.env`.
-
 ## Deploy to Cloud Run
 
 ```bash
@@ -46,8 +42,7 @@ gcloud run deploy oncursor-analyze \
 ```
 
 Cloud Run is preferred over short-timeout serverless platforms because a vision
-analysis call can take 15–40s. After deploy, set the frontend's
-`VITE_ANALYZE_URL` to `https://<service-url>/analyze` and rebuild.
+analysis call can take 15–40s.
 
 > **Alternative — Vercel:** you can host this as a Python serverless function,
 > but raise the function `maxDuration` (Hobby's short default will time out on
