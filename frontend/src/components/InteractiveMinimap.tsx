@@ -67,8 +67,8 @@ const InteractiveMinimap = (props: Props) => {
                     src={vizData.pngUrl}
                     alt="Minimap Image"
                     style={{
-                        backgroundColor: "white",
-                        border: "1px solid black",
+                        backgroundColor: "var(--oc-chart-surface)",
+                        border: "1px solid var(--oc-chart-ink)",
                         padding: "3px",
                         borderRadius: "3px",
                     }}

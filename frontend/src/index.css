@@ -1,3 +1,54 @@
+/*
+ * Theme tokens. Use these rather than raw palette values such as gray-0, which
+ * don't change with the theme. Light values are the original light-mode colors.
+ */
+:root {
+    /* Charts are images authored for a light page, so whatever frames or
+       extends one stays light in both themes. This also keeps charts with a
+       transparent background readable. */
+    --oc-chart-surface: #fff;
+    --oc-chart-ink: #000;
+}
+:root[data-mantine-color-scheme="light"] {
+    --oc-stage: var(--mantine-color-gray-0);
+    --oc-divider: var(--mantine-color-gray-3);
+    --oc-divider-strong: var(--mantine-color-gray-4);
+    --oc-active: var(--mantine-color-gray-1);
+    --oc-selected: var(--mantine-color-blue-0);
+    --oc-selected-border: var(--mantine-color-blue-4);
+    --oc-pinned: var(--mantine-color-orange-0);
+    --oc-pinned-border: var(--mantine-color-orange-4);
+    --oc-pinned-text: var(--mantine-color-orange-8);
+    --oc-pinned-action: var(--mantine-color-orange-1);
+}
+:root[data-mantine-color-scheme="dark"] {
+    --oc-stage: var(--mantine-color-dark-8);
+    --oc-divider: var(--mantine-color-dark-4);
+    --oc-divider-strong: var(--mantine-color-dark-3);
+    --oc-active: var(--mantine-color-dark-5);
+    --oc-selected: var(--mantine-color-blue-light);
+    --oc-selected-border: var(--mantine-color-blue-5);
+    /* Opaque, because this badge can sit over a zoomed chart. */
+    --oc-pinned: color-mix(
+        in srgb,
+        var(--mantine-color-orange-9) 28%,
+        var(--mantine-color-dark-7)
+    );
+    --oc-pinned-border: var(--mantine-color-orange-6);
+    --oc-pinned-text: var(--mantine-color-orange-2);
+    --oc-pinned-action: color-mix(
+        in srgb,
+        var(--mantine-color-orange-9) 50%,
+        var(--mantine-color-dark-7)
+    );
+    /* Mantine's default is about 4:1 on these backgrounds, under WCAG AA. */
+    --mantine-color-dimmed: var(--mantine-color-dark-1);
+}
+/* Slider tick labels use a fixed gray that ignores --mantine-color-dimmed. */
+:root[data-mantine-color-scheme="dark"] .mantine-Slider-markLabel {
+    color: var(--mantine-color-dimmed);
+}
+
 /* Focus-point pin marker (demo interaction page) */
 .vg-pin {
     position: absolute;

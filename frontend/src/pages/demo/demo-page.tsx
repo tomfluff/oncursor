@@ -47,6 +47,7 @@ import {
     type ReactZoomPanPinchRef,
 } from "react-zoom-pan-pinch";
 import SettingsPanel from "../../components/SettingsPanel";
+import ThemeToggle from "../../components/ThemeToggle";
 import useSessionStore from "../../stores/session-store";
 import UploadModal from "../../components/UploadModal";
 import VisualizationPanel from "../../components/VisualizationPanel";
@@ -148,8 +149,7 @@ const DemoPage = () => {
         [selectedVizId],
     );
 
-    // A user-uploaded + analyzed chart, when present, overrides the selected
-    // example. Only reachable when an analyzer endpoint is configured.
+    // A user-uploaded chart, when present, overrides the selected example.
     const [uploadedViz, setUploadedViz] = useState<VisualizationData | null>(
         null,
     );
@@ -209,7 +209,7 @@ const DemoPage = () => {
                 gap="md"
                 style={{
                     flexShrink: 0,
-                    borderBottom: "0.5px solid var(--mantine-color-gray-3)",
+                    borderBottom: "0.5px solid var(--oc-divider)",
                 }}
             >
                 <Group gap="xs" align="center" wrap="nowrap" style={{ flex: 1, minWidth: 0 }}>
@@ -250,6 +250,7 @@ const DemoPage = () => {
                     >
                         About
                     </UnstyledButton>
+                    <ThemeToggle />
                     <Anchor
                         href={PROJECT_URL}
                         target="_blank"
@@ -299,7 +300,7 @@ const DemoPage = () => {
                     position: "relative",
                     flex: 1,
                     minHeight: 0,
-                    background: "var(--mantine-color-gray-0)",
+                    background: "var(--oc-stage)",
                     overflow: "hidden",
                 }}
             >
@@ -330,6 +331,7 @@ const DemoPage = () => {
                                 margin: "0 auto",
                                 maxHeight: "100%",
                                 lineHeight: 0,
+                                background: "var(--oc-chart-surface)",
                             }}
                         >
                             <VisualizationPanel
@@ -360,11 +362,11 @@ const DemoPage = () => {
                             top: 12,
                             left: 16,
                             background: pinned
-                                ? "var(--mantine-color-orange-0)"
+                                ? "var(--oc-pinned)"
                                 : "var(--mantine-color-body)",
                             border: `0.5px solid ${pinned
-                                    ? "var(--mantine-color-orange-4)"
-                                    : "var(--mantine-color-gray-3)"
+                                    ? "var(--oc-pinned-border)"
+                                    : "var(--oc-divider)"
                                 }`,
                             borderRadius: "var(--mantine-radius-md)",
                             padding: "3px 4px 3px 8px",
@@ -374,9 +376,9 @@ const DemoPage = () => {
                             <>
                                 <IconMapPin
                                     size={14}
-                                    color="var(--mantine-color-orange-7)"
+                                    color="var(--oc-pinned-text)"
                                 />
-                                <Text size="xs" c="orange.8">
+                                <Text size="xs" c="var(--oc-pinned-text)">
                                     Focus pinned · click to move
                                 </Text>
                                 <UnstyledButton
@@ -392,9 +394,9 @@ const DemoPage = () => {
                                         borderRadius:
                                             "var(--mantine-radius-sm)",
                                         fontSize: 12,
-                                        color: "var(--mantine-color-orange-8)",
+                                        color: "var(--oc-pinned-text)",
                                         background:
-                                            "var(--mantine-color-orange-1)",
+                                            "var(--oc-pinned-action)",
                                     }}
                                 >
                                     <IconX size={12} />
@@ -449,7 +451,7 @@ const DemoPage = () => {
                                 style={{
                                     ...dockItem,
                                     background: examplesOpen
-                                        ? "var(--mantine-color-gray-1)"
+                                        ? "var(--oc-active)"
                                         : "transparent",
                                 }}
                             >
@@ -479,11 +481,11 @@ const DemoPage = () => {
                                     marginBottom: 6,
                                     borderRadius: 8,
                                     border: `1px solid ${uploadedViz
-                                            ? "var(--mantine-color-blue-4)"
-                                            : "var(--mantine-color-gray-3)"
+                                            ? "var(--oc-selected-border)"
+                                            : "var(--oc-divider)"
                                         }`,
                                     background: uploadedViz
-                                        ? "var(--mantine-color-blue-0)"
+                                        ? "var(--oc-selected)"
                                         : "transparent",
                                 }}
                             >
@@ -493,11 +495,11 @@ const DemoPage = () => {
                                         height: 44,
                                         flexShrink: 0,
                                         borderRadius: 4,
-                                        border: "1px dashed var(--mantine-color-gray-4)",
+                                        border: "1px dashed var(--oc-divider-strong)",
                                         display: "flex",
                                         alignItems: "center",
                                         justifyContent: "center",
-                                        color: "var(--mantine-color-gray-6)",
+                                        color: "var(--mantine-color-dimmed)",
                                     }}
                                 >
                                     <IconUpload size={20} />
@@ -542,11 +544,11 @@ const DemoPage = () => {
                                                     padding: 6,
                                                     borderRadius: 8,
                                                     border: `1px solid ${selected
-                                                            ? "var(--mantine-color-blue-4)"
+                                                            ? "var(--oc-selected-border)"
                                                             : "transparent"
                                                         }`,
                                                     background: selected
-                                                        ? "var(--mantine-color-blue-0)"
+                                                        ? "var(--oc-selected)"
                                                         : "transparent",
                                                 }}
                                             >
@@ -561,9 +563,9 @@ const DemoPage = () => {
                                                     fit="contain"
                                                     style={{
                                                         flexShrink: 0,
-                                                        background: "white",
+                                                        background: "var(--oc-chart-surface)",
                                                         borderRadius: 4,
-                                                        border: "0.5px solid var(--mantine-color-gray-3)",
+                                                        border: "0.5px solid var(--oc-divider)",
                                                     }}
                                                 />
                                                 <div style={{ minWidth: 0 }}>
@@ -600,7 +602,7 @@ const DemoPage = () => {
                         style={{
                             width: 1,
                             height: 26,
-                            background: "var(--mantine-color-gray-3)",
+                            background: "var(--oc-divider)",
                         }}
                     />
 
@@ -654,7 +656,7 @@ const DemoPage = () => {
                         style={{
                             width: 1,
                             height: 26,
-                            background: "var(--mantine-color-gray-3)",
+                            background: "var(--oc-divider)",
                         }}
                     />
 
@@ -678,7 +680,7 @@ const DemoPage = () => {
                                 style={{
                                     ...dockItem,
                                     background: settingsOpen
-                                        ? "var(--mantine-color-gray-1)"
+                                        ? "var(--oc-active)"
                                         : "transparent",
                                 }}
                             >
@@ -701,7 +703,7 @@ const DemoPage = () => {
                         style={{
                             width: 1,
                             height: 26,
-                            background: "var(--mantine-color-gray-3)",
+                            background: "var(--oc-divider)",
                         }}
                     />
 

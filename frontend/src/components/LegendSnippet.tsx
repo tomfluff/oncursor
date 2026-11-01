@@ -19,6 +19,7 @@ const LegendSnippet = (props: Props) => {
             key={legendData.id}
             lh={0} // Prevents bottom spacing
             style={{
+                backgroundColor: "var(--oc-chart-surface)",
                 boxShadow: "0 0 5px rgba(0, 0, 0, 0.3)",
             }}
         >

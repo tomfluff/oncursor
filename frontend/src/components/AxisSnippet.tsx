@@ -144,8 +144,9 @@ const AxisSnippet = (props: Props) => {
                     style={{
                         position: "absolute",
                         ...getLabelPlacement(),
-                        backgroundColor: "white",
-                        border: "1px solid black",
+                        backgroundColor: "var(--oc-chart-surface)",
+                        color: "var(--oc-chart-ink)",
+                        border: "1px solid var(--oc-chart-ink)",
                         padding: "2px 4px",
                         zIndex: 1000,
                     }}
@@ -157,6 +158,7 @@ const AxisSnippet = (props: Props) => {
                 lh={0}
                 style={{
                     position: "absolute",
+                    backgroundColor: "var(--oc-chart-surface)",
                     boxShadow: "0 0 5px rgba(0, 0, 0, 0.3)",
                     opacity: isVisible ? 1 : 0,
                     transition: "opacity 0.3s ease",
