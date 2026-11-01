@@ -57,10 +57,13 @@ import {
 } from "../../data/demo-visualizations";
 import type { VisualizationData } from "../../types/visualization-types";
 
-const AUTHOR_URL = "https://tomfluff.github.io/";
+const AUTHOR_URL = "https://sechayk.com/";
 const AUTHOR_IMG =
-    "https://tomfluff.github.io/assets/img/prof_pic_color-480.webp";
+    "https://sechayk.com/assets/img/prof_pic_color-480.webp";
 const PROJECT_URL = "https://visual-context.github.io/";
+const CODE_URL = "https://github.com/tomfluff/oncursor";
+const VLAT_URL = "https://doi.org/10.1109/TVCG.2016.2598920";
+const MINI_VLAT_URL = "https://doi.org/10.1111/cgf.14809";
 
 const METHOD_INFO: Record<
     ConditionId,
@@ -265,23 +268,20 @@ const DemoPage = () => {
                         <IconExternalLink size={15} />
                         Project Page
                     </Anchor>
-                    <Tooltip
-                        label="Cleaned-up public repo coming soon"
-                        withArrow
+                    <Anchor
+                        href={CODE_URL}
+                        target="_blank"
+                        rel="noreferrer"
+                        size="sm"
+                        style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: 4,
+                        }}
                     >
-                        <Group
-                            gap={4}
-                            align="center"
-                            style={{
-                                fontSize: 13,
-                                color: "var(--mantine-color-dimmed)",
-                                cursor: "not-allowed",
-                            }}
-                        >
-                            <IconBrandGithub size={15} />
-                            Code on GitHub
-                        </Group>
-                    </Tooltip>
+                        <IconBrandGithub size={15} />
+                        Code on GitHub
+                    </Anchor>
                     <Anchor href={AUTHOR_URL} target="_blank" rel="noreferrer">
                         <Avatar
                             src={AUTHOR_IMG}
@@ -910,6 +910,34 @@ const DemoPage = () => {
                                 the overlay while it stays pinned.
                             </List.Item>
                         </List>
+                    </div>
+
+                    <div>
+                        <Title order={5} mb={4}>
+                            Example charts
+                        </Title>
+                        <Text size="sm">
+                            The examples are based on the{" "}
+                            <Anchor
+                                href={MINI_VLAT_URL}
+                                target="_blank"
+                                rel="noreferrer"
+                                inherit
+                            >
+                                Mini-VLAT
+                            </Anchor>{" "}
+                            and{" "}
+                            <Anchor
+                                href={VLAT_URL}
+                                target="_blank"
+                                rel="noreferrer"
+                                inherit
+                            >
+                                VLAT
+                            </Anchor>{" "}
+                            visualization literacy assessments. We recreated all
+                            of the charts manually.
+                        </Text>
                     </div>
 
                     <Divider />

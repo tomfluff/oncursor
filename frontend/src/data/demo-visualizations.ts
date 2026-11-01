@@ -1,5 +1,6 @@
-// Bundled example charts (the VLAT-style v0 set). Each entry carries the
-// chart's normalized annotations; images live in frontend/public/demo-charts/.
+// Bundled example charts, recreated manually from the Mini-VLAT and VLAT
+// assessments (see the README). Each entry carries the chart's normalized
+// annotations; images live in frontend/public/demo-charts/.
 import type { VisualizationData } from "../types/visualization-types";
 
 export interface DemoChartIndexItem {
@@ -3247,7 +3248,7 @@ const RAW_VISUALIZATIONS: VisualizationData[] = [
 ];
 
 // Prefix bundled image paths with Vite's BASE_URL so they resolve correctly
-// when the app is served from a sub-path (e.g. /oncursor/ on GitHub Pages).
+// when the app is served from a sub-path (e.g. /app/ on GitHub Pages).
 export const DEMO_VISUALIZATIONS: VisualizationData[] = RAW_VISUALIZATIONS.map(
     (v) => ({
         ...v,

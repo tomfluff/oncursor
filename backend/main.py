@@ -16,7 +16,7 @@ from llm import analyze_chart_image
 
 app = Flask(__name__)
 
-# CORS allowlist, e.g. ALLOWED_ORIGINS="https://tomfluff.github.io".
+# CORS allowlist, e.g. ALLOWED_ORIGINS="https://visual-context.github.io".
 # Defaults to "*" for easy local testing — set it explicitly in production.
 _origins = os.getenv("ALLOWED_ORIGINS", "*")
 _origins_value = (

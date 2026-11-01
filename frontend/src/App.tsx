@@ -16,10 +16,10 @@ const colorSchemeManager = localStorageColorSchemeManager({
     key: "oncursor-color-scheme",
 });
 
-// Clean URLs (e.g. /oncursor/?viz=...). On GitHub Pages this relies on the
+// Clean URLs (e.g. /app/?viz=...). On GitHub Pages this relies on the
 // 404.html fallback generated at build time (see vite.config.ts) so deep links
 // and refreshes resolve to the SPA instead of a 404.
-// basename matches the Vite base ("/oncursor"); "/" when served from root.
+// basename matches the Vite base ("/app"); "/" when served from root.
 const basename = import.meta.env.BASE_URL.replace(/\/$/, "") || "/";
 
 function App() {

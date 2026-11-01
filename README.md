@@ -5,7 +5,7 @@ accessibility via on-cursor visual context**. When low-vision users magnify a
 chart, they lose sight of axes, labels, and the legend. These techniques bring
 that context to where the cursor is looking.
 
-**Live demo:** https://tomfluff.github.io/oncursor/
+**Live demo:** https://visual-context.github.io/app/
 
 ## Interaction methods
 
@@ -36,17 +36,19 @@ npm install
 npm run dev      # http://localhost:3000
 ```
 
-## Deploy (GitHub Pages)
+## Build & deploy
 
-Pushing to `main` builds `frontend/` and deploys via
-[`.github/workflows/pages.yml`](.github/workflows/pages.yml). Enable Pages in
-the repo settings with **Source: GitHub Actions**. The Vite `base` is
-`/oncursor/` to match the repo path.
+Pushing to `main` builds `frontend/` and publishes it to
+[visual-context.github.io/app](https://visual-context.github.io/app/) via
+[`.github/workflows/deploy.yml`](.github/workflows/deploy.yml). The source lives
+here; the workflow pushes the build to the `gh-pages` branch of
+`visual-context/app`, using an SSH deploy key stored as the `APP_DEPLOY_KEY`
+secret. The Vite `base` is `/app/` to match that path.
 
-The app uses clean URLs (e.g. `…/oncursor/?viz=…`, and later `…/oncursor/embed`).
-On a static host that needs a fallback, so the build copies `index.html` to
-`404.html` (see `vite.config.ts`) — GitHub Pages then serves the SPA for any
-path, and React Router resolves it client-side.
+The app uses clean URLs (e.g. `…/app/?viz=…`, and later `…/app/embed`). On a
+static host that needs a fallback, so the build copies `index.html` to
+`404.html` (see `vite.config.ts`). GitHub Pages then serves the SPA for any path,
+and React Router resolves it client-side.
 
 ## Upload your own chart
 
@@ -62,7 +64,45 @@ the same annotation format as the bundled examples. The demo doesn't call it.
 It's kept as a reference for automating annotation, and the API key stays
 server-side.
 
+## Example charts
+
+The bundled example charts are based on the Mini-VLAT and VLAT visualization
+literacy assessments. We recreated all of the charts manually.
+
+- S. Pandey and A. Ottley. [Mini-VLAT: A Short and Effective Measure of
+  Visualization Literacy](https://doi.org/10.1111/cgf.14809). *Computer Graphics
+  Forum* 42(3), 2023.
+- S. Lee, S.-H. Kim, and B. C. Kwon. [VLAT: Development of a Visualization
+  Literacy Assessment Test](https://doi.org/10.1109/TVCG.2016.2598920). *IEEE
+  Transactions on Visualization and Computer Graphics* 23(1), 2017.
+
+## Citation
+
+If you use this work, please cite:
+
+```bibtex
+@inproceedings{sechayk2026ChartAccessibility,
+author = {Sechayk, Yotam and Rave, Hennes and R\"adler, Max and Colley, Mark and Zhou, Zhongyi and Shamir, Ariel and Igarashi, Takeo},
+title = {Improving Low-Vision Chart Accessibility via On-Cursor Visual Context},
+year = {2026},
+month = {April},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+location = {Barcelona, Spain},
+url = {https://doi.org/10.1145/3772318.3791165},
+doi = {10.1145/3772318.3791165},
+booktitle = {Proceedings of the 2026 CHI Conference on Human Factors in Computing Systems (CHI '26)},
+numpages = {21},
+series = {CHI '26}
+}
+```
+
+## License
+
+[AGPL-3.0](LICENSE). Because it's network-served software, the app links back to
+this source from its header, which is what the AGPL asks of a hosted app.
+
 ## Credits
 
-Created with care by [Yotam Sechayk](https://tomfluff.github.io/).
+Created with care by [Yotam Sechayk](https://sechayk.com/).
 Project page: https://visual-context.github.io/

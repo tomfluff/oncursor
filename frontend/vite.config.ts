@@ -5,7 +5,7 @@ import { defineConfig } from "vite";
 
 // Copies dist/index.html -> dist/404.html after build. GitHub Pages serves
 // 404.html for any unknown path, so this makes client-side routes (e.g.
-// /oncursor/embed) and refreshes load the SPA instead of a hard 404.
+// /app/embed) and refreshes load the SPA instead of a hard 404.
 const spaFallback = {
     name: "spa-github-pages-404",
     closeBundle() {
@@ -18,8 +18,8 @@ const spaFallback = {
 
 // https://vite.dev/config/
 export default defineConfig({
-    // Served from https://tomfluff.github.io/oncursor/
-    base: "/oncursor/",
+    // Served from https://visual-context.github.io/app/
+    base: "/app/",
     plugins: [react(), spaFallback],
     resolve: {
         alias: {

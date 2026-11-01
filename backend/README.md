@@ -38,7 +38,7 @@ gcloud run deploy oncursor-analyze \
   --source . \
   --region us-central1 \
   --allow-unauthenticated \
-  --set-env-vars "OPENAI_API_KEY=sk-...,ALLOWED_ORIGINS=https://tomfluff.github.io"
+  --set-env-vars "OPENAI_API_KEY=sk-...,ALLOWED_ORIGINS=https://visual-context.github.io"
 ```
 
 Cloud Run is preferred over short-timeout serverless platforms because a vision
